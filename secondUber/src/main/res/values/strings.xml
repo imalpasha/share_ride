@@ -1,0 +1,21 @@
+<resources>
+
+
+    <string name="app_name">JualBeli</string>
+
+    <!-- Home Exit Notification -->
+    <string name="home_exit">EXIT</string>
+    <string name="home_confirm_exit">Confirm exit?</string>
+    <string name="home_cancel">Cancel</string>
+    <string name="home_close">Close</string>
+
+
+    <string name="facebook_app_id">1143272665731321</string>
+
+    <string name="email_empty">Please insert email</string>
+    <string name="password_empty">Please insert password</string>
+    <string name="student_id_empty">Please insert password</string>
+    <string name="phone_empty">Please insert password</string>
+
+
+</resources>
