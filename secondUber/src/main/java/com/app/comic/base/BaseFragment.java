@@ -357,21 +357,55 @@ public class BaseFragment extends Fragment {
 
     }
 
-    public int travellerAge(String dob) {
+    public static ArrayList<DropDownItem> getSmoker(Activity act) {
 
-        int age;
+		/*Smoker Preferences*/
+        ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
 
-        String[] splitDOB = dob.split("/");
-        String dobYear = splitDOB[2];
+        final String[] purpose = act.getResources().getStringArray(R.array.smoker);
+        for (int i = 0; i < purpose.length; i++) {
+            int purposeTag = i + 1;
+            DropDownItem itemPurpose = new DropDownItem();
+            itemPurpose.setText(purpose[i]);
+            itemPurpose.setCode(Integer.toString(purposeTag));
+            purposeList.add(itemPurpose);
+        }
 
-        boolean status = false;
+        return purposeList;
+    }
 
-        Calendar now = Calendar.getInstance();   // Gets the current date and time
-        int currentYear = now.get(Calendar.YEAR);
+    public static ArrayList<DropDownItem> getCarType(Activity act) {
 
-        age = currentYear - Integer.parseInt(dobYear);
+		/*Smoker Preferences*/
+        ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
 
-        return age;
+        final String[] purpose = act.getResources().getStringArray(R.array.car);
+        for (int i = 0; i < purpose.length; i++) {
+            int purposeTag = i + 1;
+            DropDownItem itemPurpose = new DropDownItem();
+            itemPurpose.setText(purpose[i]);
+            itemPurpose.setCode(Integer.toString(purposeTag));
+            purposeList.add(itemPurpose);
+        }
+
+        return purposeList;
+    }
+
+    public static ArrayList<DropDownItem> getState(Activity act) {
+
+		/*Smoker Preferences*/
+        ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
+
+        final String[] purpose = act.getResources().getStringArray(R.array.state);
+        for (int i = 0; i < purpose.length; i++) {
+            int purposeTag = i + 1;
+            DropDownItem itemPurpose = new DropDownItem();
+            itemPurpose.setText(purpose[i]);
+            itemPurpose.setCode(Integer.toString(purposeTag));
+            purposeList.add(itemPurpose);
+        }
+
+        return purposeList;
     }
 
 
@@ -717,6 +751,48 @@ public class BaseFragment extends Fragment {
         builder.create();
         builder.show();
     }
+
+    public void popupSelection(final ArrayList array, Activity act, final TextView txt, final Boolean tagStatus, View v) {
+
+        prefManager = new SharedPrefManager(act);
+        Utils.hideKeyboard(getActivity(), v);
+        final ArrayList<DropDownItem> a = array;
+        DropMenuAdapter dropState = new DropMenuAdapter(act);
+        dropState.setItems(a);
+
+        AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
+
+        alertStateCode.setSingleChoiceItems(dropState, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String selected = a.get(which).getText();
+                String selectedCode = a.get(which).getCode();
+
+                txt.setText(selected);
+                if (tagStatus) {
+                    txt.setTag(selectedCode);
+                }
+
+                indexForState = which;
+
+                dialog.dismiss();
+            }
+        });
+
+
+        AlertDialog mDialog = alertStateCode.create();
+        mDialog.show();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(mDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        //lp.horizontalMargin = 100;
+        //lp.verticalMargin = 100;
+        mDialog.getWindow().setAttributes(lp);
+    }
+
 
     /*Global PoPup*/
     public void popupSelectionExtra(final ArrayList array, Activity act, final TextView txt, final Boolean tagStatus, final LinearLayout txt2, final String indicate, final LinearLayout country) {

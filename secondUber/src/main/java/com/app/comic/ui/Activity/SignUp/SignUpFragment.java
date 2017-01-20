@@ -1,4 +1,4 @@
-package com.app.comic.ui.Activity.Login;
+package com.app.comic.ui.Activity.SignUp;
 
 import android.app.Activity;
 import android.content.Intent;

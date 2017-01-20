@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import com.app.comic.MainFragmentActivity;
 import com.app.comic.R;
 import com.app.comic.ui.Activity.FragmentContainerActivity;
-import com.app.comic.ui.Activity.Login.SignUpFragment;
+import com.app.comic.ui.Activity.SignUp.SignUpFragment;
 
 import butterknife.ButterKnife;
 

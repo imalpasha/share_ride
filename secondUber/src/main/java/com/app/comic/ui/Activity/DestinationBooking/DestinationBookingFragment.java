@@ -23,11 +23,13 @@ import com.app.comic.ui.Module.DestinationModule;
 import com.app.comic.ui.Module.LoginModule;
 import com.app.comic.ui.Presenter.HomePresenter;
 import com.app.comic.ui.Realm.RealmObjectController;
+import com.app.comic.utils.DropDownItem;
 import com.app.comic.utils.SharedPrefManager;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,6 +73,9 @@ public class DestinationBookingFragment extends BaseFragment implements HomePres
     Activity act;
     Validator mValidator;
 
+    private ArrayList<DropDownItem> originList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> destinationList = new ArrayList<DropDownItem>();
+
 
     public static DestinationBookingFragment newInstance() {
 
@@ -96,8 +101,35 @@ public class DestinationBookingFragment extends BaseFragment implements HomePres
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.share_ride_destination, container, false);
+        final View view = inflater.inflate(R.layout.share_ride_destination, container, false);
         ButterKnife.inject(this, view);
+
+        originList = getState(act);
+        destinationList = getState(act);
+
+        txtRideState.setText(originList.get(0).getText());
+        txtRideState.setTag(originList.get(0).getCode());
+
+        txtRideStateDestination.setText(destinationList.get(0).getText());
+        txtRideStateDestination.setTag(destinationList.get(0).getCode());
+
+        txtRideState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Log.e(purposeList.get(0).getCode().toString(),purposeList.get(1).getCode().toString());
+                popupSelection(originList, getActivity(), txtRideState, true, view);
+            }
+        });
+
+        txtRideStateDestination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Log.e(purposeList.get(0).getCode().toString(),purposeList.get(1).getCode().toString());
+                popupSelection(destinationList, getActivity(), txtRideStateDestination, true, view);
+            }
+        });
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,11 +22,13 @@ import com.app.comic.ui.Model.Request.SignPassengerRequest;
 import com.app.comic.ui.Module.SignPassengerModule;
 import com.app.comic.ui.Presenter.HomePresenter;
 import com.app.comic.ui.Realm.RealmObjectController;
+import com.app.comic.utils.DropDownItem;
 import com.app.comic.utils.SharedPrefManager;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,6 +70,8 @@ public class SignAsPassengerFragment extends BaseFragment implements Validator.V
 
 
     private Validator mValidator;
+    private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
+
 
     public static SignAsPassengerFragment newInstance() {
 
@@ -94,8 +98,23 @@ public class SignAsPassengerFragment extends BaseFragment implements Validator.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.share_ride_sign_as_passenger, container, false);
+        final View view = inflater.inflate(R.layout.share_ride_sign_as_passenger, container, false);
         ButterKnife.inject(this, view);
+
+        purposeList = getSmoker(act);
+
+        txtSmoker.setText(purposeList.get(0).getText());
+        txtSmoker.setTag(purposeList.get(0).getCode());
+
+        txtSmoker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Log.e(purposeList.get(0).getCode().toString(),purposeList.get(1).getCode().toString());
+                popupSelection(purposeList, getActivity(), txtSmoker, true, view);
+            }
+        });
+
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
